@@ -1,13 +1,14 @@
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import HomePage from "./components/HomePage/HomePage";
+
 function App() {
   return (
-    <div className="container mx-auto p-40">
-      <div>
-        <div className="shadow-md ...">123123123123123</div>
-        <div className="shadow-lg ...">123123123123123123123123</div>
-        <div className="shadow-xl ...">123123123123123123123123</div>
-        <div className="shadow-2xl ...">123123123</div>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
