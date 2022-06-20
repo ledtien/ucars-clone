@@ -1,12 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLocationDot,
   faEnvelopeOpen,
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
+import { DownOutlined } from "@ant-design/icons";
+import { Dropdown, Menu, Input, Radio, Space } from "antd";
 
 export default function HomePage() {
+  const [value, setValue] = useState(1);
+
+  const onChange = (e) => {
+    console.log("radio checked", e.target.value);
+    setValue(e.target.value);
+  };
+  const carTypeMenu = (
+    <Menu>
+      <Radio.Group onChange={onChange} value={value}>
+        <Space direction="vertical">
+          <Radio value={1}>Option A</Radio>
+          <Radio value={2}>Option B</Radio>
+        </Space>
+      </Radio.Group>
+    </Menu>
+  );
   return (
     <div>
       <div className="container mx-auto px-4">
@@ -78,7 +96,7 @@ export default function HomePage() {
               />
             </svg>
           </a>
-          <ul className="items-stretch hidden space-x-3 lg:flex">
+          <ul className="items-stretch hidden space-x-3 lg:flex text-base m-0">
             <li className="flex">
               <a href="/" className="flex items-center px-4 -mb-1 text-white ">
                 New Cars
@@ -120,7 +138,9 @@ export default function HomePage() {
       >
         <div className="container mx-auto">
           <div className="text-white" style={{ width: "540px" }}>
-            <h3 className="font-bold text-6xl mb-5">Car Marketplace</h3>
+            <h3 className="font-bold text-6xl mb-5 text-white">
+              Car Marketplace
+            </h3>
             <p style={{ color: "#e3e3e3" }} className="mb-5">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem
               quibusdam vero aperiam laboriosam ut fugiat nostrum illum
@@ -131,11 +151,51 @@ export default function HomePage() {
             </button>
           </div>
         </div>
+        <div
+          className="container mx-auto px-4 rounded-lg flex justify-between items-center bg-white absolute -bottom-20 left-48 drop-shadow-md"
+          style={{ height: "139px" }}
+        >
+          <div className="w-40">
+            <p>New/Used</p>
+            <Dropdown overlay={carTypeMenu} trigger={["click"]}>
+              <div onClick={(e) => e.preventDefault()}>
+                <div className="flex justify-between">
+                  {value}
+                  <DownOutlined />
+                </div>
+              </div>
+            </Dropdown>
+          </div>
+
+          <div>
+            <p>Price Range</p>
+            <Dropdown overlay={carTypeMenu} trigger={["click"]}>
+              <div onClick={(e) => e.preventDefault()}>
+                <div className="flex justify-between">
+                  {value}
+                  <DownOutlined />
+                </div>
+              </div>
+            </Dropdown>
+          </div>
+          <div>
+            <p>Vehicle Type</p>
+            <Dropdown overlay={carTypeMenu} trigger={["click"]}>
+              <div onClick={(e) => e.preventDefault()}>
+                <div className="flex justify-between">
+                  {value}
+                  <DownOutlined />
+                </div>
+              </div>
+            </Dropdown>
+          </div>
+          <div>
+            <button className="self-center px-14 py-3 font-semibold rounded-lg text-white bg-red-600">
+              Search
+            </button>
+          </div>
+        </div>
       </div>
-      <div
-        className="container mx-auto px-4 rounded-sm"
-        style={{ heigh: "139px" }}
-      ></div>
     </div>
   );
 }
