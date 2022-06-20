@@ -4,7 +4,7 @@ import { Card, Tag } from "antd";
 export default function CarList() {
   return (
     <div className="container mx-auto px-4">
-      <div className="pt-40">
+      <div className="pt-40 pb-20">
         <div className="grid grid-cols-4 gap-5">
           <div>
             <img
