@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Menu, Input, Radio, Space } from "antd";
+import CarList from "../CarList/CarList";
 
 export default function HomePage() {
   const [value, setValue] = useState(1);
@@ -42,7 +43,10 @@ export default function HomePage() {
             </div>
             <div className="ml-5 px-5">
               <FontAwesomeIcon icon={faEnvelopeOpen} />
-              <span className="ml-2">Email us at: hello@carbuyer.com.sg</span>
+              <span className="ml-2">
+                Email us at:
+                <span className="block ml-6">hello@carbuyer.com.sg</span>
+              </span>
             </div>
           </div>
           <div>
@@ -152,10 +156,10 @@ export default function HomePage() {
           </div>
         </div>
         <div
-          className="container mx-auto px-4 rounded-lg flex justify-between items-center bg-white absolute -bottom-20 left-48 drop-shadow-md"
-          style={{ height: "139px" }}
+          className="container mx-auto px-4 rounded-lg flex justify-between items-center bg-white absolute -bottom-20 left-1/2 drop-shadow-md"
+          style={{ height: "139px", transform: "translateX(-50%)" }}
         >
-          <div className="w-40">
+          <div className="">
             <p>New/Used</p>
             <Dropdown overlay={carTypeMenu} trigger={["click"]}>
               <div onClick={(e) => e.preventDefault()}>
@@ -167,7 +171,7 @@ export default function HomePage() {
             </Dropdown>
           </div>
 
-          <div>
+          <div className="border-l-2 pl-5">
             <p>Price Range</p>
             <Dropdown overlay={carTypeMenu} trigger={["click"]}>
               <div onClick={(e) => e.preventDefault()}>
@@ -178,7 +182,7 @@ export default function HomePage() {
               </div>
             </Dropdown>
           </div>
-          <div>
+          <div className="border-l-2 pl-5">
             <p>Vehicle Type</p>
             <Dropdown overlay={carTypeMenu} trigger={["click"]}>
               <div onClick={(e) => e.preventDefault()}>
@@ -196,6 +200,7 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+      <CarList />
     </div>
   );
 }
