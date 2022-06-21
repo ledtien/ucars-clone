@@ -24,8 +24,8 @@ import {
   Row,
   Space,
 } from "antd";
-import CarList from "../CarList/CarList";
-import CarCarousel from "../CarCarousel/CarCarousel";
+import CarList from "../../components/CarList/CarList";
+import CarCarousel from "../../components/CarCarousel/CarCarousel";
 
 const cars = [
   {
