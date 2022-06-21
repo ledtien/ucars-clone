@@ -132,7 +132,7 @@ export default function HomePage() {
             </li>
           </ul>
           <div className="items-center flex-shrink-0 hidden lg:flex">
-            <button className="self-center px-16 py-2 font-semibold rounded text-white bg-red-600">
+            <button className="self-center px-16 py-2 font-semibold rounded text-white bg-red-600 hover:bg-red-500">
               Login
             </button>
           </div>
@@ -159,7 +159,7 @@ export default function HomePage() {
               quibusdam vero aperiam laboriosam ut fugiat nostrum illum
               laudantium perferendis minus?
             </p>
-            <button className="self-center px-14 py-3 font-semibold rounded-lg text-white bg-red-600">
+            <button className="self-center px-14 py-3 font-semibold rounded-lg text-white bg-red-600 hover:bg-red-500">
               Get Started
             </button>
           </div>
@@ -203,7 +203,7 @@ export default function HomePage() {
             </Dropdown>
           </div>
           <div>
-            <button className="self-center px-14 py-3 font-semibold rounded-lg text-white bg-red-600">
+            <button className="self-center px-14 py-3 font-semibold rounded-lg text-white bg-red-600 hover:bg-red-500">
               Search
             </button>
           </div>
@@ -263,7 +263,7 @@ export default function HomePage() {
               the most.
             </p>
             <div>
-              <button className="self-center px-10 py-2 font-semibold rounded text-white bg-red-600 mt-10">
+              <button className="self-center px-10 py-2 font-semibold rounded text-white bg-red-600 mt-10 hover:bg-red-500">
                 View more
               </button>
             </div>
@@ -289,7 +289,7 @@ export default function HomePage() {
           >
             Questions about buying or renting?
           </h3>
-          <button className="self-center px-32 py-4 font-semibold rounded text-white bg-red-600 text-xl">
+          <button className="self-center px-32 py-4 font-semibold rounded text-white bg-red-600 text-xl hover:bg-red-500">
             Ask us
           </button>
         </div>
