@@ -190,11 +190,16 @@ export default function HomePage() {
   const [visible, setVisible] = useState(false);
   const [visiblePrice, setVisiblePrice] = useState(false);
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(100000);
+  const [maxPrice, setMaxPrice] = useState(1000000);
 
   const clearPrice = () => {
     setMinPrice(0);
     setMaxPrice(100000);
+    setVisiblePrice(false);
+  };
+
+  const clearType = () => {
+    setCarType([]);
     setVisiblePrice(false);
   };
 
@@ -210,6 +215,11 @@ export default function HomePage() {
     setMinPrice(minPrice);
     setMaxPrice(maxPrice);
     setVisiblePrice(false);
+  };
+
+  const setVehicleType = () => {
+    setCarType(carType);
+    setVisible(false);
   };
 
   const handleVisibleChange = (flag) => {
@@ -353,7 +363,7 @@ export default function HomePage() {
       </Checkbox.Group>
       <div className="flex justify-between items-center pt-5 border-t">
         <div
-          onClick={clearPrice}
+          onClick={clearType}
           className="cursor-pointer text-gray-600 font-semibold"
         >
           Clear
@@ -361,7 +371,7 @@ export default function HomePage() {
         <div>
           <button
             className="px-3 py-2 rounded bg-red-600 text-white"
-            onClick={setPriceRange}
+            onClick={setVehicleType}
           >
             Save
           </button>
@@ -526,8 +536,9 @@ export default function HomePage() {
                 <div className="flex justify-between">
                   <div>
                     <FontAwesomeIcon icon={faDollar} />
-                    {minPrice} - <FontAwesomeIcon icon={faDollar} />
-                    {maxPrice}
+                    {minPrice.toLocaleString()} -{" "}
+                    <FontAwesomeIcon icon={faDollar} />
+                    {maxPrice.toLocaleString()}
                   </div>
                   <DownOutlined />
                 </div>
