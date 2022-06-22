@@ -23,17 +23,9 @@ export default function CarBrands() {
     }
     if (key === "Last Updated") {
       const sort = [...brandData].sort((a, b) => {
-        if (
-          a.date
-            .split("/")
-            .reverse()
-            .join()
-            .localeCompare(b.date.split("/").reverse().join())
-        ) {
-          return 1;
-        } else {
-          return -1;
-        }
+        a = a.date.split("/").reverse().join("");
+        b = b.date.split("/").reverse().join("");
+        return a > b ? 1 : a < b ? -1 : 0;
       });
       setBrandData(sort);
     }
