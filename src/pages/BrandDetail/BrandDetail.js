@@ -352,10 +352,10 @@ export default function BrandDetail() {
           </form>
           <div className="mt-2">
             <button
-              className="self-center px-4 py-2 rounded bg-blue-700 text-white font-semibold text-base"
+              className="self-center px-4 py-2 rounded bg-blue-700 text-white font-semibold text-base mt-5"
               onClick={() => setEditInfo(!editInfo)}
             >
-              Edit information
+              {editInfo ? "Save Changes" : " Edit information"}
             </button>
           </div>
         </div>
