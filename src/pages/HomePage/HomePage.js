@@ -26,6 +26,7 @@ import {
 } from "antd";
 import CarList from "../../components/CarList/CarList";
 import CarCarousel from "../../components/CarCarousel/CarCarousel";
+import { useEffect } from "react";
 
 const cars = [
   {
@@ -38,6 +39,8 @@ const cars = [
       "https://s3-alpha-sig.figma.com/img/60cd/8b44/e9a6d1d162e4f8ae2875144e0528ad68?Expires=1656892800&Signature=b-~np3gCe4l~IqLqUnthwYAj8GDFWhAA88nKRadXafUoQgRfVPjul4xy5nnaYF~cT8hN0VFyEThH6FPKWsjSGVMOLLoQYaoHlCgmCjwhZKFrrI9PSeePPg9wrMaQ60i8qdhv4QIW2aZQrO~w7Ro8gyONOVzyQ6tU8Ye2pKhJ4d2yn~oVF8DpI9-9cx0kxY8rg~pQh~a23UHnrr19dAn~JP1w0~HCnrqJdg3F30ZTDq9L8R4qCx77pb9BxuXD08DKManPFT7YPG7JINA3Uw8sU45xV6spTHqm3EuB8mGimGAmrDlO3FaQ9L1duKgnG4vRYI9~jxTfaGOBhfQ~ZErhig__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     logo: "https://s3-alpha-sig.figma.com/img/0545/a13b/408a6d725653dce9217488f65bad49c1?Expires=1656892800&Signature=cajfHoBFkg0bWFfVyFMmOwxGJjRrZmbO7-KpBMXI4OgNP~4e1VRhyrLVLQtZZ7J-JjWHBzWu-ivaHQCyos0ztAd5TKPYwjstWHK~QZ3cZyrRI0EtxM5Ihl-ZMdnFBqwR645G4J3EMAxDUZUND697hxaOAwDaBHx8GQb-nAbOG9r3Md5jsPLlecU7zKcIkNei~KGZQNrNv~OFOAvWp3-junNkNIXDxawy-PGlZ~OdYxZglb5-HC-0P6YcQo9pavd4Sdsn~LbnvYOc0g8Htzm1rpRBpFjcCnvt~RlCFyCxJvkmBqn1UXu3PNK5Nsp30lo2D1OqQWdI5GPY3YcTTL1DfA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     seller: "Performance Motors",
+    status: "Used Cars",
+    type: "Sedan",
   },
   {
     name: "Alpine A110",
@@ -49,6 +52,8 @@ const cars = [
       "https://s3-alpha-sig.figma.com/img/b8ff/6c65/8ee6e477c1cd190d1ba4ab0feea205bc?Expires=1656892800&Signature=Zp8IBcb80rj7boDkPJKbEedVM7rG~GWrw7AzcMfvJ-10kBRossr2GgCGrMbXlhneQ8I~Giz8vEBgCFOzq9TcsoCJSWzbVhf2vsM5Vt5DdbJEdPWYE-5mnpFZyL3RM8zZp6m~epB4dlzBDjCM-F-6P4JDt2CnN5GaSaJX0F0QCLsHjTsp9p-9IvpipnzYw3oQwMakdMqBYWxV6RwTKdRKwEw7imsIK1KtZaPd6rLRsL3E2vJmV2Ndk~Ppzc7sheJeT7cvY~Z12Xb5Aog6bJNFwro3HZVQlmagOrAKtJDalrNhZAEIxScJgRrpB3lSNtWBw~wuuS1k8L932X0e5VwhvA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     logo: "https://s3-alpha-sig.figma.com/img/2ba4/b449/360d6025d9029e50d26b09fa608584e1?Expires=1656892800&Signature=YPkbs2hfHfPty9OmIB8fVNAWW6ByzAUTARAc8ihOglYagAyjwlgwMj2hSIuHbCiSfCFx3HfE7aYEHqjxREHKD3~zZoTiM5OM~kvdqJbMeO0sBzXVY9nzkD0LWMAw7YnAXLCVWJxgg3ETUUaJ1~goPEQ8rz6y1WYwYiTV1JCgzzNlKmv9oSBf37a5ocFqhFAQmOxpTbaJhvmJjUzx5vfd0V4VXM2K9~ftG81lNBrzoCEgSKmawOSDaZcp7Cf1jL3Rp6lRUX1lveUr~y3jAIP~3~fqnjUoBRk~g1C-ZuyY2y8qbnkQGOndFJGcw7Y5xcDNy6CFHyo2sa8uOZwJr0Hdyw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     seller: "Wearnes Automotive ",
+    status: "New Car (AD)",
+    type: "SUV",
   },
   {
     name: "Aston Martin DBS",
@@ -60,6 +65,8 @@ const cars = [
       "https://s3-alpha-sig.figma.com/img/7242/dc27/60d6c9040bfe4820c3f1f68376da7c02?Expires=1656892800&Signature=hT2SD4aQk5oXCyUOz0QUuumNAPzIu37GO7fFkEqyen04iAixNBHmVdQrWfl9DyE7cThcJ9CbKxl--6V1Q5744AXuh5oMkTiw71eMXvWy7ai3fJ~~V5abWaR2KZ2Ql7CsjkCwtbT0BNNeqWLJXIBvT27wdO8CMZDW3wLlqrV~VD3TDzCD4KTLprqnlRupaNOSeRDreE6q3bLzNrtHMF4L9ekSGkS2ueOh3Ss4aslslF1plDPM0WuzBfvTkeywGcia1LYbalmk6lJjRJhGBw9xpfESkoCPmk3vDdtoSS4t~bev9wSeaSWTuvWRufLJyqXKIN2Ga6qC6kFOw-eO~jbeSQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     logo: "https://s3-alpha-sig.figma.com/img/b8ff/6c65/8ee6e477c1cd190d1ba4ab0feea205bc?Expires=1656892800&Signature=Zp8IBcb80rj7boDkPJKbEedVM7rG~GWrw7AzcMfvJ-10kBRossr2GgCGrMbXlhneQ8I~Giz8vEBgCFOzq9TcsoCJSWzbVhf2vsM5Vt5DdbJEdPWYE-5mnpFZyL3RM8zZp6m~epB4dlzBDjCM-F-6P4JDt2CnN5GaSaJX0F0QCLsHjTsp9p-9IvpipnzYw3oQwMakdMqBYWxV6RwTKdRKwEw7imsIK1KtZaPd6rLRsL3E2vJmV2Ndk~Ppzc7sheJeT7cvY~Z12Xb5Aog6bJNFwro3HZVQlmagOrAKtJDalrNhZAEIxScJgRrpB3lSNtWBw~wuuS1k8L932X0e5VwhvA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     seller: "Wearnes Automotive ",
+    status: "New Car (PI)",
+    type: "MPV",
   },
   {
     name: "Alfa Romeo Stelvio",
@@ -71,6 +78,8 @@ const cars = [
       "https://s3-alpha-sig.figma.com/img/ef4c/8037/d117cf7a0caa5847a79dec4c8dd34a05?Expires=1656892800&Signature=JXn7YEC8ruXhDpXgYg5XCifnsJClICQrLbLL47OrfrwtZX0591BSEmD6r0k8cxaVWqs5HHdNpYU8VB1T02K4lYP~npP~CUwAJ8cZ-61D37556X~Xkt4MtzE4Z9HI7gQEVVOt0ImjHQfZTFDtXeoNbqUHnOMDYWMCxivhSXm~uE3kM2ZsIqrdUKlhyPbQ5CVq2Xl8lEs-IE6XlktAfADxH23bMRmfouxHER1PIQrNIHHOA0KWMrGxSo7nEyBJFiJge7BL8cc7Z3mmtTCiZenOoFCZmBwxNu~ZCCWq-t1Bg1NrX5V-0YXV3ExP-c72jAEpuOURyymvMQnEPavwmFjF0Q__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     logo: "https://s3-alpha-sig.figma.com/img/0545/a13b/408a6d725653dce9217488f65bad49c1?Expires=1656892800&Signature=cajfHoBFkg0bWFfVyFMmOwxGJjRrZmbO7-KpBMXI4OgNP~4e1VRhyrLVLQtZZ7J-JjWHBzWu-ivaHQCyos0ztAd5TKPYwjstWHK~QZ3cZyrRI0EtxM5Ihl-ZMdnFBqwR645G4J3EMAxDUZUND697hxaOAwDaBHx8GQb-nAbOG9r3Md5jsPLlecU7zKcIkNei~KGZQNrNv~OFOAvWp3-junNkNIXDxawy-PGlZ~OdYxZglb5-HC-0P6YcQo9pavd4Sdsn~LbnvYOc0g8Htzm1rpRBpFjcCnvt~RlCFyCxJvkmBqn1UXu3PNK5Nsp30lo2D1OqQWdI5GPY3YcTTL1DfA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     seller: "EuroAutomobile",
+    status: "Used Cars",
+    type: "Coupe",
   },
   {
     name: "Aston Martin DB11 Volante",
@@ -82,6 +91,8 @@ const cars = [
       "https://s3-alpha-sig.figma.com/img/7c61/d5bb/d1f04cad4a8cf0cf926fa83359bd3546?Expires=1656892800&Signature=C1BTL4Xtnu7DsCqQabvIHErfjOHzs6QAKgYV-FobyRdkSSPFIvpWAjuJnmxOvNsHm5h56fqmk95Z-1~jyy-Kb-YQ1AXt8m1t3IcldDt2uFPxJDaVJE01rr8whpUR5saxLUdmkgGtu9JNPgKrmAD0BhFEJdArNZq58p5GKOFEFalyk-g7kUqAnfEKhkUcRwWg2uNjGEM4rVJ~T7yvYywTtFsDkbm0cOefosRdYg9BZDIg2euHskqPtOxqNGHOCy38-ycXw~ZLxyROQpnd0VaLWwYQ4TN3UfdY4G-qIVR2kN~5QsicqOCZVqLZGZdzj863VSYe86wNlZMCDfGQgW2X~Q__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     logo: "https://s3-alpha-sig.figma.com/img/cc7c/dc55/88d849986df0e17a4e22d260974de23d?Expires=1656892800&Signature=XOTcCECSA-mup7JldNkS2UgezUblrZ0Nl9MSQV~fRzglBqiXmuida4ZxT4TuKmV51FfDfexf0YTO4vIwb6bYe-xXz2G~8fA65jOJdunziDjZw~CDAVYzUdJdDbRkx61xJlv9QmiJ9e3AkIBILoQpShROZJ-pmP9N91brbGeQ~W2IglhPCQAJ8L8P4cp9IFRcQoQYuB5XYB36Vi93zgQp4a-gd7aX~BoFZn4T39VJcbXYM-AlLMzPKLRvIia2vuWpvZcpclUc8maAgl7cI7JZba6iDn6EMOM8a9Ubce5ZEyiE2vZ-KsGIe0XCk5dCF3i4U9vsnWyp4R289UcLSxCYNQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     seller: "Wearnes Automotive ",
+    status: "Used Cars",
+    type: "Bus",
   },
   {
     name: "Aston Martin DB11",
@@ -93,6 +104,8 @@ const cars = [
       "https://s3-alpha-sig.figma.com/img/7c61/d5bb/d1f04cad4a8cf0cf926fa83359bd3546?Expires=1656892800&Signature=C1BTL4Xtnu7DsCqQabvIHErfjOHzs6QAKgYV-FobyRdkSSPFIvpWAjuJnmxOvNsHm5h56fqmk95Z-1~jyy-Kb-YQ1AXt8m1t3IcldDt2uFPxJDaVJE01rr8whpUR5saxLUdmkgGtu9JNPgKrmAD0BhFEJdArNZq58p5GKOFEFalyk-g7kUqAnfEKhkUcRwWg2uNjGEM4rVJ~T7yvYywTtFsDkbm0cOefosRdYg9BZDIg2euHskqPtOxqNGHOCy38-ycXw~ZLxyROQpnd0VaLWwYQ4TN3UfdY4G-qIVR2kN~5QsicqOCZVqLZGZdzj863VSYe86wNlZMCDfGQgW2X~Q__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     logo: "https://s3-alpha-sig.figma.com/img/cc7c/dc55/88d849986df0e17a4e22d260974de23d?Expires=1656892800&Signature=XOTcCECSA-mup7JldNkS2UgezUblrZ0Nl9MSQV~fRzglBqiXmuida4ZxT4TuKmV51FfDfexf0YTO4vIwb6bYe-xXz2G~8fA65jOJdunziDjZw~CDAVYzUdJdDbRkx61xJlv9QmiJ9e3AkIBILoQpShROZJ-pmP9N91brbGeQ~W2IglhPCQAJ8L8P4cp9IFRcQoQYuB5XYB36Vi93zgQp4a-gd7aX~BoFZn4T39VJcbXYM-AlLMzPKLRvIia2vuWpvZcpclUc8maAgl7cI7JZba6iDn6EMOM8a9Ubce5ZEyiE2vZ-KsGIe0XCk5dCF3i4U9vsnWyp4R289UcLSxCYNQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     seller: "Wearnes Automotive ",
+    status: "Used Cars",
+    type: "Sedan",
   },
   {
     name: "Aston Martin DB11 Volante",
@@ -104,6 +117,8 @@ const cars = [
       "https://s3-alpha-sig.figma.com/img/7c61/d5bb/d1f04cad4a8cf0cf926fa83359bd3546?Expires=1656892800&Signature=C1BTL4Xtnu7DsCqQabvIHErfjOHzs6QAKgYV-FobyRdkSSPFIvpWAjuJnmxOvNsHm5h56fqmk95Z-1~jyy-Kb-YQ1AXt8m1t3IcldDt2uFPxJDaVJE01rr8whpUR5saxLUdmkgGtu9JNPgKrmAD0BhFEJdArNZq58p5GKOFEFalyk-g7kUqAnfEKhkUcRwWg2uNjGEM4rVJ~T7yvYywTtFsDkbm0cOefosRdYg9BZDIg2euHskqPtOxqNGHOCy38-ycXw~ZLxyROQpnd0VaLWwYQ4TN3UfdY4G-qIVR2kN~5QsicqOCZVqLZGZdzj863VSYe86wNlZMCDfGQgW2X~Q__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     logo: "https://s3-alpha-sig.figma.com/img/cc7c/dc55/88d849986df0e17a4e22d260974de23d?Expires=1656892800&Signature=XOTcCECSA-mup7JldNkS2UgezUblrZ0Nl9MSQV~fRzglBqiXmuida4ZxT4TuKmV51FfDfexf0YTO4vIwb6bYe-xXz2G~8fA65jOJdunziDjZw~CDAVYzUdJdDbRkx61xJlv9QmiJ9e3AkIBILoQpShROZJ-pmP9N91brbGeQ~W2IglhPCQAJ8L8P4cp9IFRcQoQYuB5XYB36Vi93zgQp4a-gd7aX~BoFZn4T39VJcbXYM-AlLMzPKLRvIia2vuWpvZcpclUc8maAgl7cI7JZba6iDn6EMOM8a9Ubce5ZEyiE2vZ-KsGIe0XCk5dCF3i4U9vsnWyp4R289UcLSxCYNQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     seller: "Wearnes Automotive ",
+    status: "Used Cars",
+    type: "Sedan",
   },
   {
     name: "BMW X3",
@@ -115,6 +130,8 @@ const cars = [
       "https://s3-alpha-sig.figma.com/img/60cd/8b44/e9a6d1d162e4f8ae2875144e0528ad68?Expires=1656892800&Signature=b-~np3gCe4l~IqLqUnthwYAj8GDFWhAA88nKRadXafUoQgRfVPjul4xy5nnaYF~cT8hN0VFyEThH6FPKWsjSGVMOLLoQYaoHlCgmCjwhZKFrrI9PSeePPg9wrMaQ60i8qdhv4QIW2aZQrO~w7Ro8gyONOVzyQ6tU8Ye2pKhJ4d2yn~oVF8DpI9-9cx0kxY8rg~pQh~a23UHnrr19dAn~JP1w0~HCnrqJdg3F30ZTDq9L8R4qCx77pb9BxuXD08DKManPFT7YPG7JINA3Uw8sU45xV6spTHqm3EuB8mGimGAmrDlO3FaQ9L1duKgnG4vRYI9~jxTfaGOBhfQ~ZErhig__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     logo: "https://s3-alpha-sig.figma.com/img/0545/a13b/408a6d725653dce9217488f65bad49c1?Expires=1656892800&Signature=cajfHoBFkg0bWFfVyFMmOwxGJjRrZmbO7-KpBMXI4OgNP~4e1VRhyrLVLQtZZ7J-JjWHBzWu-ivaHQCyos0ztAd5TKPYwjstWHK~QZ3cZyrRI0EtxM5Ihl-ZMdnFBqwR645G4J3EMAxDUZUND697hxaOAwDaBHx8GQb-nAbOG9r3Md5jsPLlecU7zKcIkNei~KGZQNrNv~OFOAvWp3-junNkNIXDxawy-PGlZ~OdYxZglb5-HC-0P6YcQo9pavd4Sdsn~LbnvYOc0g8Htzm1rpRBpFjcCnvt~RlCFyCxJvkmBqn1UXu3PNK5Nsp30lo2D1OqQWdI5GPY3YcTTL1DfA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     seller: "Performance Motors",
+    status: "Used Cars",
+    type: "Sedan",
   },
   {
     name: "Alpine A110",
@@ -126,6 +143,8 @@ const cars = [
       "https://s3-alpha-sig.figma.com/img/b8ff/6c65/8ee6e477c1cd190d1ba4ab0feea205bc?Expires=1656892800&Signature=Zp8IBcb80rj7boDkPJKbEedVM7rG~GWrw7AzcMfvJ-10kBRossr2GgCGrMbXlhneQ8I~Giz8vEBgCFOzq9TcsoCJSWzbVhf2vsM5Vt5DdbJEdPWYE-5mnpFZyL3RM8zZp6m~epB4dlzBDjCM-F-6P4JDt2CnN5GaSaJX0F0QCLsHjTsp9p-9IvpipnzYw3oQwMakdMqBYWxV6RwTKdRKwEw7imsIK1KtZaPd6rLRsL3E2vJmV2Ndk~Ppzc7sheJeT7cvY~Z12Xb5Aog6bJNFwro3HZVQlmagOrAKtJDalrNhZAEIxScJgRrpB3lSNtWBw~wuuS1k8L932X0e5VwhvA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     logo: "https://s3-alpha-sig.figma.com/img/2ba4/b449/360d6025d9029e50d26b09fa608584e1?Expires=1656892800&Signature=YPkbs2hfHfPty9OmIB8fVNAWW6ByzAUTARAc8ihOglYagAyjwlgwMj2hSIuHbCiSfCFx3HfE7aYEHqjxREHKD3~zZoTiM5OM~kvdqJbMeO0sBzXVY9nzkD0LWMAw7YnAXLCVWJxgg3ETUUaJ1~goPEQ8rz6y1WYwYiTV1JCgzzNlKmv9oSBf37a5ocFqhFAQmOxpTbaJhvmJjUzx5vfd0V4VXM2K9~ftG81lNBrzoCEgSKmawOSDaZcp7Cf1jL3Rp6lRUX1lveUr~y3jAIP~3~fqnjUoBRk~g1C-ZuyY2y8qbnkQGOndFJGcw7Y5xcDNy6CFHyo2sa8uOZwJr0Hdyw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     seller: "Wearnes Automotive ",
+    status: "Used Cars",
+    type: "Sedan",
   },
   {
     name: "Aston Martin DBS",
@@ -137,6 +156,8 @@ const cars = [
       "https://s3-alpha-sig.figma.com/img/7242/dc27/60d6c9040bfe4820c3f1f68376da7c02?Expires=1656892800&Signature=hT2SD4aQk5oXCyUOz0QUuumNAPzIu37GO7fFkEqyen04iAixNBHmVdQrWfl9DyE7cThcJ9CbKxl--6V1Q5744AXuh5oMkTiw71eMXvWy7ai3fJ~~V5abWaR2KZ2Ql7CsjkCwtbT0BNNeqWLJXIBvT27wdO8CMZDW3wLlqrV~VD3TDzCD4KTLprqnlRupaNOSeRDreE6q3bLzNrtHMF4L9ekSGkS2ueOh3Ss4aslslF1plDPM0WuzBfvTkeywGcia1LYbalmk6lJjRJhGBw9xpfESkoCPmk3vDdtoSS4t~bev9wSeaSWTuvWRufLJyqXKIN2Ga6qC6kFOw-eO~jbeSQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     logo: "https://s3-alpha-sig.figma.com/img/b8ff/6c65/8ee6e477c1cd190d1ba4ab0feea205bc?Expires=1656892800&Signature=Zp8IBcb80rj7boDkPJKbEedVM7rG~GWrw7AzcMfvJ-10kBRossr2GgCGrMbXlhneQ8I~Giz8vEBgCFOzq9TcsoCJSWzbVhf2vsM5Vt5DdbJEdPWYE-5mnpFZyL3RM8zZp6m~epB4dlzBDjCM-F-6P4JDt2CnN5GaSaJX0F0QCLsHjTsp9p-9IvpipnzYw3oQwMakdMqBYWxV6RwTKdRKwEw7imsIK1KtZaPd6rLRsL3E2vJmV2Ndk~Ppzc7sheJeT7cvY~Z12Xb5Aog6bJNFwro3HZVQlmagOrAKtJDalrNhZAEIxScJgRrpB3lSNtWBw~wuuS1k8L932X0e5VwhvA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     seller: "Wearnes Automotive ",
+    status: "Used Cars",
+    type: "Sedan",
   },
   {
     name: "Alfa Romeo Stelvio",
@@ -148,6 +169,8 @@ const cars = [
       "https://s3-alpha-sig.figma.com/img/ef4c/8037/d117cf7a0caa5847a79dec4c8dd34a05?Expires=1656892800&Signature=JXn7YEC8ruXhDpXgYg5XCifnsJClICQrLbLL47OrfrwtZX0591BSEmD6r0k8cxaVWqs5HHdNpYU8VB1T02K4lYP~npP~CUwAJ8cZ-61D37556X~Xkt4MtzE4Z9HI7gQEVVOt0ImjHQfZTFDtXeoNbqUHnOMDYWMCxivhSXm~uE3kM2ZsIqrdUKlhyPbQ5CVq2Xl8lEs-IE6XlktAfADxH23bMRmfouxHER1PIQrNIHHOA0KWMrGxSo7nEyBJFiJge7BL8cc7Z3mmtTCiZenOoFCZmBwxNu~ZCCWq-t1Bg1NrX5V-0YXV3ExP-c72jAEpuOURyymvMQnEPavwmFjF0Q__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     logo: "https://s3-alpha-sig.figma.com/img/0545/a13b/408a6d725653dce9217488f65bad49c1?Expires=1656892800&Signature=cajfHoBFkg0bWFfVyFMmOwxGJjRrZmbO7-KpBMXI4OgNP~4e1VRhyrLVLQtZZ7J-JjWHBzWu-ivaHQCyos0ztAd5TKPYwjstWHK~QZ3cZyrRI0EtxM5Ihl-ZMdnFBqwR645G4J3EMAxDUZUND697hxaOAwDaBHx8GQb-nAbOG9r3Md5jsPLlecU7zKcIkNei~KGZQNrNv~OFOAvWp3-junNkNIXDxawy-PGlZ~OdYxZglb5-HC-0P6YcQo9pavd4Sdsn~LbnvYOc0g8Htzm1rpRBpFjcCnvt~RlCFyCxJvkmBqn1UXu3PNK5Nsp30lo2D1OqQWdI5GPY3YcTTL1DfA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     seller: "EuroAutomobile",
+    status: "Used Cars",
+    type: "Sedan",
   },
   {
     name: "Aston Martin DB11 Volante",
@@ -159,6 +182,8 @@ const cars = [
       "https://s3-alpha-sig.figma.com/img/7c61/d5bb/d1f04cad4a8cf0cf926fa83359bd3546?Expires=1656892800&Signature=C1BTL4Xtnu7DsCqQabvIHErfjOHzs6QAKgYV-FobyRdkSSPFIvpWAjuJnmxOvNsHm5h56fqmk95Z-1~jyy-Kb-YQ1AXt8m1t3IcldDt2uFPxJDaVJE01rr8whpUR5saxLUdmkgGtu9JNPgKrmAD0BhFEJdArNZq58p5GKOFEFalyk-g7kUqAnfEKhkUcRwWg2uNjGEM4rVJ~T7yvYywTtFsDkbm0cOefosRdYg9BZDIg2euHskqPtOxqNGHOCy38-ycXw~ZLxyROQpnd0VaLWwYQ4TN3UfdY4G-qIVR2kN~5QsicqOCZVqLZGZdzj863VSYe86wNlZMCDfGQgW2X~Q__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     logo: "https://s3-alpha-sig.figma.com/img/cc7c/dc55/88d849986df0e17a4e22d260974de23d?Expires=1656892800&Signature=XOTcCECSA-mup7JldNkS2UgezUblrZ0Nl9MSQV~fRzglBqiXmuida4ZxT4TuKmV51FfDfexf0YTO4vIwb6bYe-xXz2G~8fA65jOJdunziDjZw~CDAVYzUdJdDbRkx61xJlv9QmiJ9e3AkIBILoQpShROZJ-pmP9N91brbGeQ~W2IglhPCQAJ8L8P4cp9IFRcQoQYuB5XYB36Vi93zgQp4a-gd7aX~BoFZn4T39VJcbXYM-AlLMzPKLRvIia2vuWpvZcpclUc8maAgl7cI7JZba6iDn6EMOM8a9Ubce5ZEyiE2vZ-KsGIe0XCk5dCF3i4U9vsnWyp4R289UcLSxCYNQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     seller: "Wearnes Automotive ",
+    status: "Used Cars",
+    type: "Sedan",
   },
   {
     name: "Aston Martin DB11",
@@ -170,6 +195,8 @@ const cars = [
       "https://s3-alpha-sig.figma.com/img/7c61/d5bb/d1f04cad4a8cf0cf926fa83359bd3546?Expires=1656892800&Signature=C1BTL4Xtnu7DsCqQabvIHErfjOHzs6QAKgYV-FobyRdkSSPFIvpWAjuJnmxOvNsHm5h56fqmk95Z-1~jyy-Kb-YQ1AXt8m1t3IcldDt2uFPxJDaVJE01rr8whpUR5saxLUdmkgGtu9JNPgKrmAD0BhFEJdArNZq58p5GKOFEFalyk-g7kUqAnfEKhkUcRwWg2uNjGEM4rVJ~T7yvYywTtFsDkbm0cOefosRdYg9BZDIg2euHskqPtOxqNGHOCy38-ycXw~ZLxyROQpnd0VaLWwYQ4TN3UfdY4G-qIVR2kN~5QsicqOCZVqLZGZdzj863VSYe86wNlZMCDfGQgW2X~Q__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     logo: "https://s3-alpha-sig.figma.com/img/cc7c/dc55/88d849986df0e17a4e22d260974de23d?Expires=1656892800&Signature=XOTcCECSA-mup7JldNkS2UgezUblrZ0Nl9MSQV~fRzglBqiXmuida4ZxT4TuKmV51FfDfexf0YTO4vIwb6bYe-xXz2G~8fA65jOJdunziDjZw~CDAVYzUdJdDbRkx61xJlv9QmiJ9e3AkIBILoQpShROZJ-pmP9N91brbGeQ~W2IglhPCQAJ8L8P4cp9IFRcQoQYuB5XYB36Vi93zgQp4a-gd7aX~BoFZn4T39VJcbXYM-AlLMzPKLRvIia2vuWpvZcpclUc8maAgl7cI7JZba6iDn6EMOM8a9Ubce5ZEyiE2vZ-KsGIe0XCk5dCF3i4U9vsnWyp4R289UcLSxCYNQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     seller: "Wearnes Automotive ",
+    status: "Used Cars",
+    type: "Sedan",
   },
   {
     name: "Aston Martin DB11 Volante",
@@ -181,20 +208,27 @@ const cars = [
       "https://s3-alpha-sig.figma.com/img/7c61/d5bb/d1f04cad4a8cf0cf926fa83359bd3546?Expires=1656892800&Signature=C1BTL4Xtnu7DsCqQabvIHErfjOHzs6QAKgYV-FobyRdkSSPFIvpWAjuJnmxOvNsHm5h56fqmk95Z-1~jyy-Kb-YQ1AXt8m1t3IcldDt2uFPxJDaVJE01rr8whpUR5saxLUdmkgGtu9JNPgKrmAD0BhFEJdArNZq58p5GKOFEFalyk-g7kUqAnfEKhkUcRwWg2uNjGEM4rVJ~T7yvYywTtFsDkbm0cOefosRdYg9BZDIg2euHskqPtOxqNGHOCy38-ycXw~ZLxyROQpnd0VaLWwYQ4TN3UfdY4G-qIVR2kN~5QsicqOCZVqLZGZdzj863VSYe86wNlZMCDfGQgW2X~Q__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     logo: "https://s3-alpha-sig.figma.com/img/cc7c/dc55/88d849986df0e17a4e22d260974de23d?Expires=1656892800&Signature=XOTcCECSA-mup7JldNkS2UgezUblrZ0Nl9MSQV~fRzglBqiXmuida4ZxT4TuKmV51FfDfexf0YTO4vIwb6bYe-xXz2G~8fA65jOJdunziDjZw~CDAVYzUdJdDbRkx61xJlv9QmiJ9e3AkIBILoQpShROZJ-pmP9N91brbGeQ~W2IglhPCQAJ8L8P4cp9IFRcQoQYuB5XYB36Vi93zgQp4a-gd7aX~BoFZn4T39VJcbXYM-AlLMzPKLRvIia2vuWpvZcpclUc8maAgl7cI7JZba6iDn6EMOM8a9Ubce5ZEyiE2vZ-KsGIe0XCk5dCF3i4U9vsnWyp4R289UcLSxCYNQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
     seller: "Wearnes Automotive ",
+    status: "Used Cars",
+    type: "Sedan",
   },
 ];
 
 export default function HomePage() {
-  const [value, setValue] = useState("New Cars");
-  const [carType, setCarType] = useState([`10+ more`]);
+  const [value, setValue] = useState("");
+  const [carType, setCarType] = useState([]);
   const [visible, setVisible] = useState(false);
   const [visiblePrice, setVisiblePrice] = useState(false);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000000);
+  const [filterCars, setFilterCars] = useState([]);
+
+  useEffect(() => {
+    setFilterCars(cars);
+  }, []);
 
   const clearPrice = () => {
     setMinPrice(0);
-    setMaxPrice(100000);
+    setMaxPrice(1000000);
     setVisiblePrice(false);
   };
 
@@ -380,6 +414,73 @@ export default function HomePage() {
       </div>
     </Menu>
   );
+
+  const handleSearch = () => {
+    if (value !== "") {
+      const filterData = cars.filter((car) => car.status === value);
+      console.log(filterData);
+      setFilterCars(filterData);
+    }
+
+    if (carType.length !== 0 && value === "") {
+      const filterData = cars.filter((car) =>
+        carType.some((type) => car.type.includes(type))
+      );
+      console.log(filterData);
+      setFilterCars(filterData);
+    }
+
+    if (minPrice >= 0 && maxPrice >= 0) {
+      const filterData = cars.filter(
+        (car) => car.price >= minPrice && car.price <= maxPrice
+      );
+      setFilterCars(filterData);
+    }
+
+    if (minPrice >= 0 && maxPrice >= 0 && carType !== 0) {
+      const filterData = cars.filter(
+        (car) =>
+          car.price >= minPrice &&
+          car.price <= maxPrice &&
+          carType.some((type) => car.type.includes(type))
+      );
+      setFilterCars(filterData);
+    }
+
+    if (minPrice >= 0 && maxPrice >= 0 && value !== "") {
+      const filterData = cars.filter(
+        (car) =>
+          car.price >= minPrice && car.price <= maxPrice && car.status === value
+      );
+      setFilterCars(filterData);
+    }
+
+    if (value !== "" && carType.length !== 0) {
+      const filterData = cars.filter(
+        (car) =>
+          car.status === value &&
+          carType.some((type) => car.type.includes(type))
+      );
+      setFilterCars(filterData);
+    }
+
+    if (
+      value !== "" &&
+      carType.length !== 0 &&
+      minPrice >= 0 &&
+      maxPrice >= 0
+    ) {
+      const filterData = cars.filter(
+        (car) =>
+          car.price >= minPrice &&
+          car.price <= maxPrice &&
+          car.status === value &&
+          carType.some((type) => car.type.includes(type))
+      );
+      setFilterCars(filterData);
+    }
+  };
+
   return (
     <div>
       <div className="container mx-auto px-4">
@@ -516,7 +617,10 @@ export default function HomePage() {
           <div className="w-80 pl-8">
             <p className="font-semibold">New/Used</p>
             <Dropdown overlay={carStatus} trigger={["click"]}>
-              <div onClick={(e) => e.preventDefault()}>
+              <div
+                onClick={(e) => e.preventDefault()}
+                className="cursor-pointer"
+              >
                 <div className="flex justify-between">
                   <div className="w-full"> {value}</div>
                   <DownOutlined />
@@ -533,7 +637,10 @@ export default function HomePage() {
               onVisibleChange={handleVisibleChangePrice}
               visible={visiblePrice}
             >
-              <div onClick={(e) => e.preventDefault()}>
+              <div
+                onClick={(e) => e.preventDefault()}
+                className="cursor-pointer"
+              >
                 <div className="flex justify-between">
                   <div>
                     <FontAwesomeIcon icon={faDollar} />
@@ -554,7 +661,10 @@ export default function HomePage() {
               onVisibleChange={handleVisibleChange}
               visible={visible}
             >
-              <div onClick={(e) => e.preventDefault()}>
+              <div
+                onClick={(e) => e.preventDefault()}
+                className="cursor-pointer"
+              >
                 <div className="flex justify-between">
                   <div> {carType?.join(", ")}</div>
                   <DownOutlined />
@@ -563,13 +673,16 @@ export default function HomePage() {
             </Dropdown>
           </div>
           <div>
-            <button className="self-center px-14 py-3 font-semibold rounded-lg text-white bg-red-600 hover:bg-red-500">
+            <button
+              className="self-center px-14 py-3 font-semibold rounded-lg text-white bg-red-600 hover:bg-red-500"
+              onClick={handleSearch}
+            >
               Search
             </button>
           </div>
         </div>
       </div>
-      <CarList cars={cars} />
+      <CarList cars={filterCars} />
       <div style={{ backgroundColor: "#232323" }}>
         <div className="py-20">
           <div className="container mx-auto px-4">

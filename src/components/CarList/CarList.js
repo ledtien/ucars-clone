@@ -1,14 +1,15 @@
 import React from "react";
 import { Tag } from "antd";
 import { useState } from "react";
+import { useEffect } from "react";
 
 export default function CarList(props) {
   const cars = props.cars;
-  const [carList, setCarList] = useState({
-    cars,
-    itemToShow: 7,
-    expended: false,
-  });
+  const [carList, setCarList] = useState({});
+
+  useEffect(() => {
+    setCarList({ cars, itemToShow: 7, expended: false });
+  }, [cars]);
   const showMore = () => {
     carList.itemToShow === 7
       ? setCarList({ cars, itemToShow: carList.cars?.length, expended: true })
