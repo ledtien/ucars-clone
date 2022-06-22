@@ -52,7 +52,6 @@ export default function BrandDetail() {
   };
 
   const brandDetail = BrandData.filter((item) => item.name === id);
-  console.log(brandDetail);
   const handleChange = (info) => {
     if (info.file.status === "uploading") {
       setLoading(true);
