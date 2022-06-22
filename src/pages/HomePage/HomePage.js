@@ -256,7 +256,7 @@ export default function HomePage() {
         <InputNumber
           size="large"
           min={0}
-          defaultValue={0}
+          value={minPrice}
           onChange={onChangeMinValue}
           controls={false}
           style={{ width: "160px" }}
@@ -264,7 +264,7 @@ export default function HomePage() {
         -<span className="text-gray-500">Max</span>
         <InputNumber
           size="large"
-          defaultValue={100000}
+          value={maxPrice}
           min={0}
           style={{ width: "160px" }}
           onChange={onChangeMaxValue}
@@ -304,6 +304,7 @@ export default function HomePage() {
           width: "100%",
         }}
         onChange={onChangeCarType}
+        value={carType}
       >
         <Row className="mb-3">
           <Col span={8}>
