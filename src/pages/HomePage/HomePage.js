@@ -704,7 +704,7 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      <footer className="px-4 container mx-auto   ">
+      <footer className="px-4 container mx-auto  py-10 ">
         <div className=" flex flex-col justify-between py-10 space-y-8 lg:flex-row lg:space-y-0">
           <div className="">
             <a
