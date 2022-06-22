@@ -11,6 +11,7 @@ import { Dropdown, Menu, Space } from "antd";
 import { useState } from "react";
 import BrandList from "../../components/BrandList/BrandList";
 import { BrandData } from "../../components/BrandList/BrandData";
+import CreateBrand from "../../components/Modals/CreateBrand";
 
 export default function CarBrands() {
   const [filterStatus, setFilterStatus] = useState("View All");
@@ -164,9 +165,7 @@ export default function CarBrands() {
             </form>
           </div>
           <div>
-            <button className="self-center px-4 py-2 bg-blue-600 text-white rounded">
-              + Add Brand
-            </button>
+            <CreateBrand />
           </div>
         </div>
         <BrandList data={brandData} />
