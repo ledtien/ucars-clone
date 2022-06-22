@@ -435,7 +435,7 @@ export default function HomePage() {
       setFilterCars(filterData);
     }
 
-    if (minPrice >= 0 && maxPrice >= 0 && carType !== 0) {
+    if (minPrice >= 0 && maxPrice >= 0 && carType.length !== 0) {
       const filterData = cars.filter(
         (car) =>
           car.price >= minPrice &&
