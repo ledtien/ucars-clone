@@ -88,7 +88,6 @@ export default function SideBar() {
       <div className="divide-y divide-gray-700 px-2">
         <ul className="pt-2 pb-4 space-y-1 text-sm">
           {SideBarData.map((item, index) => {
-            console.log(item);
             return (
               <li
                 key={index}
@@ -97,12 +96,16 @@ export default function SideBar() {
                     ? "text-base p-3 bg-blue-500 rounded text-white cursor-pointer"
                     : "text-base p-3 cursor-pointer"
                 }
-                onClick={() => ShowActiveLink(index)}
+                onClick={() => {
+                  ShowActiveLink(index);
+                }}
               >
                 <Link
                   to={item.path}
                   className={
-                    index === activeLink ? "text-white" : "text-gray-500"
+                    index === activeLink
+                      ? "text-white py-3"
+                      : "text-gray-500 py-3"
                   }
                   onClick={() => {
                     if (item.subNav) {
@@ -124,7 +127,6 @@ export default function SideBar() {
                   {subnav &&
                     item.subNav &&
                     item.subNav.map((item, index) => {
-                      console.log(item);
                       return (
                         <div
                           key={index}
