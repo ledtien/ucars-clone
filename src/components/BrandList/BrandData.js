@@ -1,5 +1,3 @@
-import React from "react";
-
 export const BrandData = [
   {
     id: "1",

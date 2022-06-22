@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Tag } from "antd";
+import { history } from "../../App";
 
 export default function BrandList({ data }) {
   return (
@@ -66,7 +67,10 @@ export default function BrandList({ data }) {
               </Tag>
             </div>
             <div>
-              <button className="self-center px-3 py-1 border-2 rounded border-gray-400">
+              <button
+                className="self-center px-3 py-1 border-2 rounded border-gray-400"
+                onClick={() => history.push(`/brand/${item.name}`)}
+              >
                 View Detail
               </button>
             </div>
