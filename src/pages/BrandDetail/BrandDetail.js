@@ -40,7 +40,16 @@ export default function BrandDetail() {
   const [imageUrl, setImageUrl] = useState();
   const [brandStatus, setBrandStatus] = useState("Active");
   const [editInfo, setEditInfo] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const { id } = useParams();
+
+  const handleMouseOver = () => {
+    setIsHovering(true);
+  };
+
+  const handleMouseOut = () => {
+    setIsHovering(false);
+  };
 
   const brandDetail = BrandData.filter((item) => item.name === id);
   console.log(brandDetail);
@@ -67,7 +76,7 @@ export default function BrandDetail() {
           marginTop: 8,
         }}
       >
-        Upload
+        Change Logo
       </div>
     </div>
   );
@@ -115,6 +124,47 @@ export default function BrandDetail() {
     </Menu>
   );
 
+  const HoverableDiv = ({ handleMouseOver, handleMouseOut }) => {
+    return (
+      <div
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+        className="w-56 relative"
+      >
+        <img src={brandDetail[0].image} alt="logo" />
+      </div>
+    );
+  };
+
+  const HoverUpload = () => {
+    return (
+      <div className="z-10 absolute top-10 left-10">
+        <Upload
+          name="avatar"
+          listType="picture-card"
+          className="avatar-uploader"
+          showUploadList={false}
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          beforeUpload={beforeUpload}
+          onChange={handleChange}
+          style={{ width: "200px" }}
+        >
+          {imageUrl ? (
+            <img
+              src={imageUrl}
+              alt="avatar"
+              style={{
+                width: "100%",
+              }}
+            />
+          ) : (
+            uploadButton
+          )}
+        </Upload>
+      </div>
+    );
+  };
+
   return (
     <div>
       <SideBar />
@@ -144,32 +194,12 @@ export default function BrandDetail() {
           <div className="border-b mt-8">
             <p className="text-black text-base font-semibold">Brand Logo</p>
           </div>
-          <div className="mt-4">
-            {editInfo ? (
-              <Upload
-                name="avatar"
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                beforeUpload={beforeUpload}
-                onChange={handleChange}
-              >
-                {imageUrl ? (
-                  <img
-                    src={imageUrl}
-                    alt="avatar"
-                    style={{
-                      width: "100%",
-                    }}
-                  />
-                ) : (
-                  uploadButton
-                )}
-              </Upload>
-            ) : (
-              <img src={brandDetail[0].image} alt="" />
-            )}
+          <div className="mt-4 relative">
+            <HoverableDiv
+              handleMouseOver={handleMouseOver}
+              handleMouseOut={handleMouseOut}
+            ></HoverableDiv>
+            {isHovering && <HoverUpload />}
           </div>
           <div className="mt-8 border-b">
             <h3 className="text-base font-semibold text-black">
