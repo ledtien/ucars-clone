@@ -418,7 +418,6 @@ export default function HomePage() {
   const handleSearch = () => {
     if (value !== "") {
       const filterData = cars.filter((car) => car.status === value);
-      console.log(filterData);
       setFilterCars(filterData);
     }
 
@@ -426,7 +425,6 @@ export default function HomePage() {
       const filterData = cars.filter((car) =>
         carType.some((type) => car.type.includes(type))
       );
-      console.log(filterData);
       setFilterCars(filterData);
     }
 
