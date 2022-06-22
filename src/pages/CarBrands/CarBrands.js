@@ -59,9 +59,19 @@ export default function CarBrands() {
   };
 
   const onClick = ({ key }) => {
-    console.log(key);
     setFilterStatus(key);
     sorting(key);
+  };
+
+  const handleChange = (e) => {
+    if (e.target.value !== "") {
+      const newData = [...brandData].filter((item) =>
+        item.name.toLowerCase().trim().includes(e.target.value)
+      );
+      setBrandData(newData);
+    } else {
+      setBrandData(BrandData);
+    }
   };
 
   const menu = (
@@ -148,6 +158,7 @@ export default function CarBrands() {
                   id="simple-search"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 outline-none"
                   placeholder="Search car brand"
+                  onChange={handleChange}
                 />
               </div>
             </form>
