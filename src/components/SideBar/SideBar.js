@@ -8,6 +8,7 @@ export default function SideBar() {
   const [sideBar, setSideBar] = useState(true);
   const [activeLink, setActiveLink] = useState(0);
   const [subnav, setSubnav] = useState(false);
+  const [activeSub, setActiveSub] = useState(0);
 
   const showSideBar = () => {
     setSideBar(!sideBar);
@@ -15,6 +16,10 @@ export default function SideBar() {
 
   const ShowActiveLink = (index) => {
     setActiveLink(index);
+  };
+
+  const showActiveSub = (index) => {
+    setActiveSub(index);
   };
 
   const showSubnav = () => {
@@ -83,50 +88,67 @@ export default function SideBar() {
       <div className="divide-y divide-gray-700 px-2">
         <ul className="pt-2 pb-4 space-y-1 text-sm">
           {SideBarData.map((item, index) => {
+            console.log(item);
             return (
               <li
                 key={index}
                 className={
-                  index === activeLink
-                    ? "text-base p-3 bg-blue-500 rounded text-white flex cursor-pointer"
-                    : "text-base p-3 flex cursor-pointer"
+                  index === activeLink && !item.subNav
+                    ? "text-base p-3 bg-blue-500 rounded text-white cursor-pointer"
+                    : "text-base p-3 cursor-pointer"
                 }
                 onClick={() => ShowActiveLink(index)}
               >
-                {item.subNav ? (
-                  <div
-                    className={
-                      index === activeLink ? "text-white" : "text-gray-500"
+                <Link
+                  to={item.path}
+                  className={
+                    index === activeLink ? "text-white" : "text-gray-500"
+                  }
+                  onClick={() => {
+                    if (item.subNav) {
+                      showSubnav();
                     }
-                  >
-                    <span className="mr-2">{item.icon}</span> {item.title}
-                  </div>
-                ) : (
-                  <Link
-                    to={item.path}
-                    className={
-                      index === activeLink ? "text-white" : "text-gray-500"
-                    }
-                  >
-                    <span className="mr-2">{item.icon}</span> {item.title}
-                  </Link>
-                )}
-                <div className="ml-2">
-                  {item?.subNav && subnav
-                    ? item.iconOpen
-                    : item.subNav
-                    ? item.iconClosed
-                    : null}
+                  }}
+                >
+                  <span className="mr-2">{item.icon}</span> {item.title}{" "}
+                  <span className="ml-2">
+                    {item?.subNav && subnav
+                      ? item.iconOpen
+                      : item.subNav
+                      ? item.iconClosed
+                      : null}
+                  </span>
+                </Link>
+
+                <div>
+                  {subnav &&
+                    item.subNav &&
+                    item.subNav.map((item, index) => {
+                      console.log(item);
+                      return (
+                        <div
+                          key={index}
+                          className={
+                            index === activeSub
+                              ? "text-base p-1 bg-blue-500 rounded text-white cursor-pointer pl-8 leading-10 mt-2 mb-2"
+                              : "text-base p-1 cursor-pointer pl-8 leading-10 mt-2 mb-2"
+                          }
+                          onClick={() => showActiveSub(index)}
+                        >
+                          <Link
+                            to={item.path}
+                            className={
+                              index === activeSub
+                                ? "text-white"
+                                : "text-gray-500"
+                            }
+                          >
+                            {item.title}
+                          </Link>
+                        </div>
+                      );
+                    })}
                 </div>
-                {subnav &&
-                  item.subNav.map((item, index) => {
-                    console.log(item);
-                    return (
-                      <div key={index}>
-                        <Link to={item.path}>{item.title}</Link>
-                      </div>
-                    );
-                  })}
               </li>
             );
           })}
