@@ -1,16 +1,23 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Router, Switch } from "react-router-dom";
+import BrandDetail from "./pages/BrandDetail/BrandDetail";
 import CarBrands from "./pages/CarBrands/CarBrands";
 import HomePage from "./pages/HomePage/HomePage";
+import { createBrowserHistory } from "history";
+
+export const history = createBrowserHistory();
 
 function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/brand" component={CarBrands} />
-      </Switch>
-    </BrowserRouter>
+    <div>
+      <Router history={history}>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/brand" component={CarBrands} />
+          <Route exact path="/brand/:id" component={BrandDetail} />
+        </Switch>
+      </Router>
+    </div>
   );
 }
 
