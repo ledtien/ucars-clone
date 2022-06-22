@@ -351,6 +351,22 @@ export default function HomePage() {
           </Col>
         </Row>
       </Checkbox.Group>
+      <div className="flex justify-between items-center pt-5 border-t">
+        <div
+          onClick={clearPrice}
+          className="cursor-pointer text-gray-600 font-semibold"
+        >
+          Clear
+        </div>
+        <div>
+          <button
+            className="px-3 py-2 rounded bg-red-600 text-white"
+            onClick={setPriceRange}
+          >
+            Save
+          </button>
+        </div>
+      </div>
     </Menu>
   );
   return (
